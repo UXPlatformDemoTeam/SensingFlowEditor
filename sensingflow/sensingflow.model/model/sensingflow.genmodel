@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/sensingflow.model/src" modelPluginID="sensingflow.model"
+    modelName="Sensingflow" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>sensingflow.ecore</foreignModel>
+  <genPackages prefix="Sensingflow" disposableProviderFactory="true" interfacePackageSuffix="model"
+      metaDataPackageSuffix="model" classPackageSuffix="model.impl" utilityPackageSuffix="model.util"
+      providerPackageSuffix="model.provider" presentationPackageSuffix="model.presentation"
+      testsPackageSuffix="model.test" ecorePackage="sensingflow.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sensingflow.ecore#//SensingflowStructuralLinkAggregatorKind">
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowStructuralLinkAggregatorKind/AGGREGATION"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowStructuralLinkAggregatorKind/EXHIBITION"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowStructuralLinkAggregatorKind/GENERALIZATION"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sensingflow.ecore#//SensingflowProceduralLinkKind">
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowProceduralLinkKind/AGENT"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowProceduralLinkKind/INSTRUMENT"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowProceduralLinkKind/CONSUMPTION"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowProceduralLinkKind/EFFECT"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowProceduralLinkKind/RESULT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="sensingflow.ecore#//SensingflowLinkRouterKind">
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowLinkRouterKind/BENDPOINT"/>
+      <genEnumLiterals ecoreEnumLiteral="sensingflow.ecore#//SensingflowLinkRouterKind/MANHATTAN"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="sensingflow.ecore#//Point"/>
+    <genDataTypes ecoreDataType="sensingflow.ecore#//Rectangle"/>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowContainer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowContainer/nodes"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowProcessor">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowProcessor/links"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowNode">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowNode/incomingLinks"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowNode/outgoingLinks"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowNode/container"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowNode/constraints"/>
+      <genOperations ecoreOperation="sensingflow.ecore#//SensingflowNode/getOutgoingStructuralLinks"/>
+      <genOperations ecoreOperation="sensingflow.ecore#//SensingflowNode/getIncomingStructuralLinks"/>
+      <genOperations ecoreOperation="sensingflow.ecore#//SensingflowNode/getOpd"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowThing">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowThing/name"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowSensor"/>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowTask"/>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowStructuralLinkAggregator">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowStructuralLinkAggregator/kind"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowLink">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowLink/opd"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowLink/source"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference sensingflow.ecore#//SensingflowLink/target"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowLink/bendpoints"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowLink/routerKind"/>
+    </genClasses>
+    <genClasses ecoreClass="sensingflow.ecore#//SensingflowProceduralLink">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute sensingflow.ecore#//SensingflowProceduralLink/kind"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated sensingflow -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="sensingflow.model.presentation.SensingflowModelWizardID"
+            name="%_UI_SensingflowModelWizard_label"
+            class="sensingflow.model.presentation.SensingflowModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/SensingflowModelFile.gif">
+         <description>%_UI_SensingflowModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated sensingflow -->
+      <editor
+            id="sensingflow.model.presentation.SensingflowEditorID"
+            name="%_UI_SensingflowEditor_label"
+            icon="icons/full/obj16/SensingflowModelFile.gif"
+            extensions="sensingflow"
+            class="sensingflow.model.presentation.SensingflowEditor"
+            contributorClass="sensingflow.model.presentation.SensingflowActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

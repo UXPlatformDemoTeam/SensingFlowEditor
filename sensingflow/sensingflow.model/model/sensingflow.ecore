@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sensingflow" nsURI="sensingflow.kaist" nsPrefix="sensingflow">
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nodes" upperBound="-1"
+        eType="#//SensingflowNode" containment="true" eOpposite="#//SensingflowNode/container"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" ordered="false" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" changeable="false"
+        iD="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowProcessor" eSuperTypes="#//SensingflowContainer">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="links" upperBound="-1"
+        eType="#//SensingflowLink" containment="true" eOpposite="#//SensingflowLink/proc"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextType" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="error" ordered="false"
+        unique="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"
+        defaultValueLiteral="0.1"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="values" ordered="false"
+        unique="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowNode" eSuperTypes="#//SensingflowContainer">
+    <eOperations name="getProc" eType="#//SensingflowProcessor"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="incomingLinks" upperBound="-1"
+        eType="#//SensingflowLink" eOpposite="#//SensingflowLink/target"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outgoingLinks" upperBound="-1"
+        eType="#//SensingflowLink" eOpposite="#//SensingflowLink/source"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" eType="#//SensingflowContainer"
+        eOpposite="#//SensingflowContainer/nodes"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="constraints" eType="#//Rectangle"
+        defaultValueLiteral="0,0,50,50"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowThing" eSuperTypes="#//SensingflowNode">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        defaultValueLiteral="&lt;...>"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logicParameter" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&lt;...>"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="DeviceId" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&lt;...>"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="InstantParameter" ordered="false"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString" defaultValueLiteral="&lt;...>"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="outPorts" upperBound="-1"
+        eType="#//SensingflowOutPort" eOpposite="#//SensingflowOutPort/thing"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowSensor" eSuperTypes="#//SensingflowThing">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operatorName" eType="#//SensingflowSensorType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowTask" eSuperTypes="#//SensingflowThing">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inPorts" upperBound="-1"
+        eType="#//SensingflowInPort" eOpposite="#//SensingflowInPort/task"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="operatorName" eType="#//SensingflowTaskType"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowLink">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="proc" eType="#//SensingflowProcessor"
+        eOpposite="#//SensingflowProcessor/links"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="source" eType="#//SensingflowNode"
+        eOpposite="#//SensingflowNode/outgoingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="#//SensingflowNode"
+        eOpposite="#//SensingflowNode/incomingLinks"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bendpoints" upperBound="-1"
+        eType="#//Point"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="routerKind" eType="#//SensingflowLinkRouterKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="windowSize" ordered="false"
+        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="slidingWindowSize" ordered="false"
+        unique="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SensingflowLinkRouterKind">
+    <eLiterals name="BENDPOINT" literal="Bendpoint"/>
+    <eLiterals name="MANHATTAN" value="1" literal="Manhattan"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="Point" instanceClassName="org.eclipse.draw2d.geometry.Point"/>
+  <eClassifiers xsi:type="ecore:EDataType" name="Rectangle" instanceClassName="org.eclipse.draw2d.geometry.Rectangle"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowPort" eSuperTypes="#//SensingflowNode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowInPort" eSuperTypes="#//SensingflowPort">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="task" eType="#//SensingflowTask"
+        eOpposite="#//SensingflowTask/inPorts"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensingflowOutPort" eSuperTypes="#//SensingflowPort">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="outputSize" ordered="false"
+        unique="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thing" eType="#//SensingflowThing"
+        eOpposite="#//SensingflowThing/outPorts"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frameSize" ordered="false"
+        unique="false" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subFrameSize" ordered="false"
+        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subFrameSlidingSize" ordered="false"
+        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frameInterval" ordered="false"
+        unique="false" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SensingflowSensorType">
+    <eLiterals name="DefaultSensor" literal="DefaultSensor"/>
+    <eLiterals name="SensingSound" value="1" literal="SensingSound"/>
+    <eLiterals name="AccelDefault" value="2" literal="AccelDefault"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SensingflowTaskType">
+     <eLiterals name="DefaultTask" value="0" literal="DefaultTask"/>
+     <eLiterals name="AccelDefault" value="1" literal="AccelDefault"/>
+     <eLiterals name="ArgMax" value="2" literal="ArgMax"/>
+     <eLiterals name="AVERAGE" value="3" literal="AVERAGE"/>
+     <eLiterals name="AVERAGE_VECTOR" value="4" literal="AVERAGE_VECTOR"/>
+     <eLiterals name="BANDWIDTH" value="5" literal="BANDWIDTH"/>
+     <eLiterals name="BatPhonePlaceDetection" value="6" literal="BatPhonePlaceDetection"/>
+     <eLiterals name="ButterworthFilter" value="7" literal="ButterworthFilter"/>
+     <eLiterals name="BYPASS" value="8" literal="BYPASS"/>
+     <eLiterals name="Correlation" value="9" literal="Correlation"/>
+     <eLiterals name="CrossCorrelation" value="10" literal="CrossCorrelation"/>
+     <eLiterals name="DC" value="11" literal="DC"/>
+     <eLiterals name="Decibel" value="12" literal="Decibel"/>
+     <eLiterals name="DecisionTree" value="13" literal="DecisionTree"/>
+     <eLiterals name="Demodulation" value="14" literal="Demodulation"/>
+     <eLiterals name="Downsampling" value="15" literal="Downsampling"/>
+     <eLiterals name="Energy" value="16" literal="Energy"/>
+     <eLiterals name="Entropy" value="17" literal="Entropy"/>
+     <eLiterals name="FFT" value="18" literal="FFT"/>
+     <eLiterals name="FFTC" value="19" literal="FFTC"/>
+     <eLiterals name="FFTNormalizedMagnitude" value="20" literal="FFTNormalizedMagnitude"/>
+     <eLiterals name="Filter" value="21" literal="Filter"/>
+     <eLiterals name="GMM" value="22" literal="GMM"/>
+     <eLiterals name="HMM" value="23" literal="HMM"/>
+     <eLiterals name="Increment" value="24" literal="Increment"/>
+     <eLiterals name="LEFR" value="25" literal="LEFR"/>
+     <eLiterals name="MFCC" value="26" literal="MFCC"/>
+     <eLiterals name="MFCC_DEMULTIPLEXER" value="27" literal="MFCC_DEMULTIPLEXER"/>
+     <eLiterals name="Normalize" value="28" literal="Normalize"/>
+     <eLiterals name="PerCom_Complex" value="29" literal="PerCom_Complex"/>
+     <eLiterals name="PerCom_Simple" value="30" literal="PerCom_Simple"/>
+     <eLiterals name="RootMeanSquare" value="31" literal="RootMeanSquare"/>
+     <eLiterals name="RelativeSpectralEntropy" value="32" literal="RelativeSpectralEntropy"/>
+     <eLiterals name="RawDeltaIntegral" value="33" literal="RawDeltaIntegral"/>
+     <eLiterals name="Resampling" value="34" literal="Resampling"/>
+     <eLiterals name="RowPercentile" value="35" literal="RowPercentile"/>
+     <eLiterals name="RowSort" value="36" literal="RowSort"/>
+     <eLiterals name="SBufferWin" value="37" literal="SBufferWin"/>
+     <eLiterals name="SpectralCentroid" value="38" literal="SpectralCentroid"/>
+     <eLiterals name="SpectralFlux" value="39" literal="SpectralFlux"/>
+     <eLiterals name="SpectralRolloff" value="40" literal="SpectralRolloff"/>
+     <eLiterals name="SWin" value="41" literal="SWin"/>
+     <eLiterals name="Segmentor" value="42" literal="Segmentor"/>
+     <eLiterals name="Smoothing" value="43" literal="Smoothing"/>
+     <eLiterals name="SoundAdmissionControl" value="44" literal="SoundAdmissionControl"/>
+     <eLiterals name="Spectrum" value="45" literal="Spectrum"/>
+     <eLiterals name="Square" value="46" literal="Square"/>
+     <eLiterals name="Sum" value="47" literal="Sum"/>
+     <eLiterals name="TWin" value="48" literal="TWin"/>
+     <eLiterals name="VARIANCE" value="49" literal="VARIANCE"/>
+     <eLiterals name="WindowFunction" value="50" literal="WindowFunction"/>
+  </eClassifiers>
+</ecore:EPackage>
