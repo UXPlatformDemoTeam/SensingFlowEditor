@@ -27,6 +27,7 @@ To compile and build the SensingFlow Editor, install the following dependencies:
 1. From the Palette, choose a node type you want to add:
 >The palette starts folded by default.  
 >To open it, click the small triangle on the right side of the editor.
+
 2. Select the node created, change the Operator Name attribute from the Property view. 
 3. After finishing the work, save the diagram via ``File``-``Save`` or ``Ctrl+S``.
 
