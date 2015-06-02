@@ -2,9 +2,7 @@
 
 ##Requirements
 To compile and build the SensingFlow Editor, install the following dependencies:
-
 * Java Development Kit (JDK) version 1.6 or greater which includes the JRE
-
 * Eclipse Modeling Package
   1. ``Help`` - ``Install New Software``
   2. Select ``Luna - http://download.eclipse.org/releases/luna`` from the ``Work with`` dropdown.
