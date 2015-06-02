@@ -1,0 +1,507 @@
+<OperatorInfo>
+	<SensorList>
+		<Sensor operatorName="SensingSound" deviceId="MobileSoundSensor" logic="8000">
+			<Output frameSize="30720" subFrameSize="512" subFrameSlidingSize="512" frameInterval="30720" />
+		</Sensor>
+
+		<Sensor operatorName="AccelDefault" deviceId="MobileAccelGyroSensor" logic="50">
+			<Output frameSize="6000" subFrameSize="180" subFrameSlidingSize="180" frameInterval="6000" />
+		</Sensor>
+	</SensorList>
+
+
+
+	<TaskList>
+		<Task operatorName="AccelDefault" className="TaskAccelRawData" deviceId="Mobile" logic="50" other="rawdata">
+			<Inputs fixed="true" interfaces="1" />
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="ArgMax" className="TaskArgMax" deviceId="Mobile" logic="" other="ArgMax">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="AVERAGE" className="TaskAverage" deviceId="Mobile" logic="" other="avg">
+			<!-- other="avgSF, avgSRF, avgSC, avgBW, avgRSE" however these are not used elsewhere in the repository-->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="AVERAGE_VECTOR" className="TaskAverageVector" deviceId="Mobile" logic="13" other="avgMFCC">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="13"> <!-- logic value-->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="BANDWIDTH" className="TaskBW" deviceId="Mobile" logic="" other="BW">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="BatPhonePlaceDetection" className="TaskBatphonePlaceDetection" deviceId="Mobile" logic="10 325" other="PlaceDetection">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="ButterworthFilter" className="TaskButterWorthFilter" deviceId="Mobile" logic="" other="MicButterworthFilter">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="24000">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="BYPASS" className="TaskBypass" deviceId="Mobile" logic="" other="Bypass">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Correlation" className="TaskCorrelation" deviceId="Mobile" logic="5" other="Correlation">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="false" interfaces="5" />
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="CrossCorrelation" className="TaskCrossCorrelation" deviceId="Mobile" logic="4800" other="MicCrossCorrelation">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="DC" className="TaskDC" deviceId="Mobile" logic="" other="DC">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Decibel" className="TaskDecibelConversion" deviceId="Mobile" logic="" other="Log">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="325"> <!-- same size as input-->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="DecisionTree" className="TaskDecisionTree" deviceId="Mobile" logic="ACTIVITY 4 tree.txt" other="DecisionTree">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="2">
+				<Output size="1" interfaceID="0" description="decision tree resulting context type">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+				<Output size="1" interfaceID="1" description="classification result is known=0, not known=1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Demodulation" className="TaskDemodulation" deviceId="Mobile" logic="48000" other="MicDemodulation">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="24000"> <!-- output size is logic/2 -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Downsampling" className="TaskDownsampling" deviceId="Mobile" logic="5" other="MicDownsampling">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="4800"> <!-- input size/ logic -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Energy" className="TaskEnergy" deviceId="Mobile" logic="" other="Energy">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Entropy" className="TaskEntropy" deviceId="Mobile" logic="" other="Entropy">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="FFT" className="TaskFFT" deviceId="Mobile" logic="1024" other="MicFFT">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1"> <!-- Output size is probably logic*2 -->
+				<Output size="2048">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="FFTC" className="TaskFFTC" deviceId="Mobile" logic="512" other="FFTC">
+			<Inputs fixed="true" interfaces="2">
+				<Input interfaceID="0" description="input data list" />
+				<Input interfaceID="1" description="Control list, where 0.0 value is interpreted as False, and non-0.0 value as True" />
+			</Inputs>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="1024"> <!-- Logic * 2-->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="FFTNormalizedMagnitude" className="TaskFFTNormalizedMagnitude" deviceId="Mobile" logic="511" other="Normalize">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="511"> <!-- Logic value -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Filter" className="TaskFilter" deviceId="Mobile" logic="325" other="MicSpectrumFilter">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="325"> <!-- Logic value-->
+					<Request windowSize="1000" slidingSize="1000" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="GMM" className="TaskGMM" deviceId="Mobile" logic="SOUND office meeting street" other="GMM">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="3" slidingSize="3" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="HMM" className="TaskHMM" deviceId="Mobile" logic="model file names" other="HMM">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" /> <!-- Values not known -->
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Increment" className="TaskIncrement" deviceId="Mobile" logic="" other="Increment">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="10"> <!-- size of input -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="LEFR" className="TaskLEFR" deviceId="Mobile" logic="0.9" other="LEFR">
+			<Inputs fixed="true" interfaces="2">
+				<Input interfaceID="0" description="input data list" />
+				<Input interfaceID="1" description="Control list, where 0.0 value is interpreted as False, and non-0.0 value as True" />
+			</Inputs>
+
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="MFCC" className="TaskMFCC" deviceId="Mobile" logic="512 13" other="MFCC">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="13"> <!-- logic value[1] -->
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="MFCC_DEMULTIPLEXER" className="TaskMFCCDemultiplexer" deviceId="Mobile" logic="13" other="demultiplexer">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="13"> <!-- logic value -->
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Normalize" className="TaskNormalize" deviceId="Mobile" logic="1" other="Normalize">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="325"> <!-- input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="PerCom_Complex" className="TaskPerComComplex" deviceId="Mobile" logic="10" other="PerComComplex">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="10"> <!-- logic value -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="PerCom_Simple" className="TaskPerComSimple" deviceId="Mobile" logic="10" other="PerComSimple">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="10"> <!-- Logic value -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="RootMeanSquare" className="TaskRMS" deviceId="Mobile" logic="" other="RMS">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="RelativeSpectralEntropy" className="TaskRSE" deviceId="Mobile" logic="511" other="RSE">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="RawDeltaIntegral" className="TaskRawDeltaIntegral" deviceId="Mobile" logic="" other="RawDeltaIntegral">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="3"> <!-- interface is fixed, input output size dependent on input size -->
+				<Output size="10"> <!-- Size depends on input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Resampling" className="TaskResampling" deviceId="Mobile" logic="" other="Resampling">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1"> <!-- interface is fixed, input output size dependent on input size -->
+				<Output size="10"> <!-- Size depends on input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="RowPercentile" className="TaskRowPercentile" deviceId="Mobile" logic="325 325000 5" other="Percentile">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="325"> <!-- logic value[0], also input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="RowSort" className="TaskRowSort" deviceId="Mobile" logic="325 325000" other="RowSort">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1"> <!-- input output size dependent on  logic value[1] -->
+				<Output size="325000">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SBufferWin" className="TaskSBufferWin" deviceId="Mobile" logic="2 512 2048" other="SBufferWin">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="false" interfaces="2" /> <!-- Interface number dependent on logic[0] -->
+			<Outputs fixed="false" interfaces="1"> <!-- input output size dependent on product of logic[0], logic[1]-->
+				<Output size="1024">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SpectralCentroid" className="TaskSC" deviceId="Mobile" logic="" other="SC">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SpectralFlux" className="TaskSF" deviceId="Mobile" logic="511" other="SF">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SpectralRolloff" className="TaskSRF" deviceId="Mobile" logic="" other="SRF">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="20" slidingSize="20" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SWin" className="TaskSWindow" deviceId="Mobile" logic="24" other="SWinGMM">
+			<Inputs fixed="false" interfaces="24" />
+			<Outputs fixed="true" interfaces="1"> <!-- logic value -->
+				<Output size="24">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Segmentor" className="TaskSegmentor" deviceId="Mobile" logic="10 foo bar RMS" other="Segmentor">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="10"> <!--Interface depends on logic[0], output size depends on logic[0] --> 
+				<Output size="10">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Smoothing" className="TaskSmoothing" deviceId="Mobile" logic="5" other="TWinSmoothing">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="SoundAdmissionControl" className="TaskSoundAdmissionControl" deviceId="Mobile" logic="450 40" other="AdmissionControl">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Spectrum" className="TaskSpectrum" deviceId="Mobile" logic="" other="MicSpectrum">
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="512"> <!-- input size/4 -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Square" className="TaskSquare" deviceId="Mobile" logic="" other="square">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="512"> <!-- input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="Sum" className="TaskSum" deviceId="Mobile" logic="" other="sum">
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="2"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="512"> <!-- input size -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="TWin" className="TaskTWindow" deviceId="Mobile" logic="2048 512_256 128_64" other="TWin">
+			<!-- Uses logic parameter however default value not known. Not present in processor_info -->
+			<!-- Not present in processor_info, unknown how to properly use -->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="10"> <!-- couldn't decipher semantics! not used -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="VARIANCE" className="TaskVariance" deviceId="Mobile" logic="" other="varSF">
+			<!-- other="varSF, varSRF, varSC, varBW, varRSE" however these are not used elsewhere in the repository-->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="true" interfaces="1">
+				<Output size="1">
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+		<Task operatorName="WindowFunction" className="TaskWindowFunction" deviceId="Mobile" logic="rectangular 1024" other="MicWindow">
+			<!-- other="varSF, varSRF, varSC, varBW, varRSE" however these are not used elsewhere in the repository-->
+			<Inputs fixed="true" interfaces="1"/>
+			<Outputs fixed="false" interfaces="1">
+				<Output size="1024"> <!-- Dependent on the inputs size, second value of SensingSound... -->
+					<Request windowSize="1" slidingSize="1" />
+				</Output>
+			</Outputs>
+		</Task>
+
+	</TaskList>
+
+</OperatorInfo>

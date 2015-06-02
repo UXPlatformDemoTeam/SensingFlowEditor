@@ -253,8 +253,11 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 			System.out.println(importPath);
 			try {
 				// DKIM: Load operator_info.xml
+				final File f = new File(SensingflowGraphicalEditor.class.getProtectionDomain().getCodeSource()
+						.getLocation().getPath());
 				String filePath = file.getLocation().toString();
-				String infoPath = filePath.substring(0, filePath.lastIndexOf("/") + 1) + "operator_info.xml";
+				String infoPath = f.getAbsolutePath().substring(0, f.getAbsolutePath().lastIndexOf("/") + 1)
+						+ "operator_info.xml";
 				thingInfo = new HashMap<String, SensingflowThingInfo>();
 				SAXBuilder saxBuilder = new SAXBuilder();
 				Document operator_info = saxBuilder.build(new File(infoPath));
