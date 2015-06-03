@@ -35,3 +35,5 @@ To compile and build the SensingFlow Editor, install the following dependencies:
 3. Choose ``General``-``File System``
 4. Select the directory where the file your want to import exists
 5. Select the file(s) from the list on the right side and click ``Finish``
+6. From the Project Explorer view, right click on the file you added and select ``Open With``-``Other``
+7. Choose ``SensingFlow Editor`` from the list
