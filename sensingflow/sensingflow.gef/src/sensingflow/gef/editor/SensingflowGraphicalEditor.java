@@ -202,9 +202,12 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 
 					Attribute attr = new Attribute("From", Integer.toString(SID));
 					child.setAttribute(attr);
-					attr = new Attribute("FromIf", Integer.toString(node_to_outport.get(Integer.toString(SID)).indexOf(
+					String FromIf = Integer.toString(node_to_outport.get(Integer.toString(SID)).indexOf(
 							Integer.toString(SIF)))
-							+ Integer.toString(nodeIf[SID][SIF]++));
+							+ Integer.toString(nodeIf[SID][SIF]++);
+					if (FromIf.length() != 3)
+						FromIf = "0"+FromIf;
+					attr = new Attribute("FromIf", FromIf);
 					child.setAttribute(attr);
 					attr = new Attribute("To", TID);
 					child.setAttribute(attr);
@@ -256,8 +259,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 				// DKIM: Load operator_info.xml
 				String currentPath = new File(SensingflowGraphicalEditor.class.getProtectionDomain().getCodeSource()
 						.getLocation().getPath()).getAbsolutePath();
-				String infoPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1)
-						+ "operator_info.xml";
+				String infoPath = currentPath.substring(0, currentPath.lastIndexOf("/") + 1) + "operator_info.xml";
 				thingInfo = new HashMap<String, SensingflowThingInfo>();
 				SAXBuilder saxBuilder = new SAXBuilder();
 				Document operator_info = saxBuilder.build(new File(infoPath));
@@ -272,15 +274,10 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 						if (tlist.getName() == "Task") {
 							tmp.setNumInput(tlist.getChild("Inputs").getAttributeValue("interfaces"));
 							tmp.setNumOutput(tlist.getChild("Outputs").getAttributeValue("interfaces"));
-							String size = tlist.getChild("Outputs").getChild("Output").getAttributeValue("size");
-							if (size != null) {
-								tmp.setNumOutputSize(size);
-							}
 							tmp.setType("Task");
 						} else {
 							tmp.setNumInput("0");
 							tmp.setNumOutput("1");
-							tmp.setNumOutputSize("1");
 							tmp.setType("Sensor");
 						}
 						thingInfo.put(tmp.getName(), tmp);
@@ -315,7 +312,16 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 						if (elm.getName() == "Connection") {
 							SensingflowConnInfo tmp = new SensingflowConnInfo();
 							tmp.setFromID(elm.getAttributeValue("From"));
-							tmp.setFromIf(elm.getAttributeValue("FromIf"));
+							if (elm.getAttributeValue("FromIf") == null) {
+								tmp.setFromIf("000");
+							} else {
+								String FromIf = elm.getAttributeValue("FromIf");
+								if (FromIf.length() == 2)
+									FromIf = "0" + FromIf;
+								else if (FromIf.length() == 1)
+									FromIf = "0" + FromIf + "0";
+								tmp.setFromIf(FromIf);
+							}
 							tmp.setToID(elm.getAttributeValue("To"));
 							tmp.setToIf(elm.getAttributeValue("ToIf"));
 							conn.add(tmp);
@@ -343,7 +349,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 							int numOutput = Integer.parseInt(tmp.getNumOutput());
 							int numInput = Integer.parseInt(tmp.getNumInput());
 							numOutputID[Integer.parseInt(ID)] = numOutput;
-							numOutputSize[Integer.parseInt(ID)] = Integer.parseInt(tmp.getNumOutputSize());
 							String outports = "";
 							for (int i = 0; i < numOutput; i++) {
 								if (i != 0)
@@ -360,19 +365,12 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 								for (SensingflowConnInfo tmpconn : conn) {
 									if (Integer.parseInt(tmpconn.getFromID()) == Integer.parseInt(ID)) {
 										if (tmpconn.getFromIf() != null) {
-											int If;
-											if (tmp.getNumOutputSize().equals("1"))
-												If = Integer.parseInt(tmpconn.getFromIf());
-											else {
-												If = Integer.parseInt(tmpconn.getFromIf().substring(0,
-														tmpconn.getFromIf().length() - 1));
-											}
+											System.out.println(tmpconn.getFromIf());
+											int If = Integer.parseInt(tmpconn.getFromIf().substring(0, 2));
 											if (If != i)
 												continue;
 										}
-
 										int idx = conn.indexOf(tmpconn);
-
 										if (cnt++ != 0)
 											outgoing += " ";
 										outgoing += "//@links." + Integer.toString(idx);
@@ -439,32 +437,24 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 							child.setAttribute("operatorName", name);
 							newRootElement.addContent(child);
 							numNode++;
-						} else if (elm.getName() == "Connection") {
-							Element links = new Element("links");
-							String From = elm.getAttributeValue("From");
-							String FromIf = elm.getAttributeValue("FromIf");
-							String To = elm.getAttributeValue("To");
-							String ToIf = elm.getAttributeValue("ToIf");
-							int numOutput = numOutputID[Integer.parseInt(From)];
-							int PortID = numOutput;
-							if (ToIf != null)
-								PortID += Integer.parseInt(ToIf);
-							if (FromIf != null) {
-								String If;
-								if (numOutputSize[Integer.parseInt(From)] == 1)
-									If = FromIf;
-								else
-									If = FromIf.substring(0, FromIf.length() - 1);
-
-								attr = new Attribute("source", "//@nodes." + NodeID.get(From) + "/@nodes." + If);
-							} else {
-								attr = new Attribute("source", "//@nodes." + NodeID.get(From) + "/@nodes." + 0);
-							}
-							links.setAttribute(attr);
-							attr = new Attribute("target", "//@nodes." + NodeID.get(To) + "/@nodes." + PortID);
-							links.setAttribute(attr);
-							newRootElement.addContent(links);
 						}
+					}
+					for (SensingflowConnInfo tmpconn : conn) {
+						Element links = new Element("links");
+						String From = tmpconn.getFromID();
+						String FromIf = tmpconn.getFromIf();
+						String To = tmpconn.getToID();
+						String ToIf = tmpconn.getToIf();
+						int PortID = numOutputID[Integer.parseInt(From)];
+						if (ToIf != null)
+							PortID += Integer.parseInt(ToIf);
+						String If = Integer.toString(Integer.parseInt(FromIf.substring(0, 2)));
+						attr = new Attribute("source", "//@nodes." + NodeID.get(From) + "/@nodes." + If);
+						links.setAttribute(attr);
+						attr = new Attribute("target", "//@nodes." + NodeID.get(To) + "/@nodes." + PortID);
+						links.setAttribute(attr);
+						System.out.println(links.getAttributes().get(0) + " " + links.getAttributes().get(1));
+						newRootElement.addContent(links);
 					}
 					exportDoc.setRootElement(newRootElement);
 					importPath = filePath.substring(0, filePath.lastIndexOf(".") + 1) + "sensingflow";
