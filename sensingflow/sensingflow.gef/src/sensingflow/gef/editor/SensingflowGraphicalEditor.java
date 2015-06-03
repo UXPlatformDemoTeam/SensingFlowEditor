@@ -287,7 +287,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 				rootElement = LoadFile.getRootElement();
 				// DKIM: convert XML to the original format
 				if (rootElement.getName() == "Processor") {
-					System.out.println("===== Start Importing =====");
 					ArrayList<SensingflowConnInfo> conn = new ArrayList<SensingflowConnInfo>();
 
 					Attribute attr;
@@ -319,7 +318,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 								if (FromIf.length() == 2)
 									FromIf = "0" + FromIf;
 								else if (FromIf.length() == 1)
-									FromIf = "0" + FromIf + "0";
+									FromIf = "00" + FromIf;
 								tmp.setFromIf(FromIf);
 							}
 							tmp.setToID(elm.getAttributeValue("To"));
@@ -396,7 +395,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 								port.setAttribute(attr);
 								int cnt = 0;
 								String incoming = "";
-
 								for (SensingflowConnInfo tmpconn : conn) {
 									if (Integer.parseInt(tmpconn.getToID()) == Integer.parseInt(ID)) {
 										if (tmpconn.getToIf() != null
@@ -467,9 +465,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 					xmlOutput.setFormat(Format.getPrettyFormat());
 					xmlOutput.output(exportDoc, new FileWriter(importPath));
 					importPath = "file:" + importPath;
-
-					System.out.println("===== End of Importing =====");
-
 				}
 
 			} catch (JDOMException e1) {
