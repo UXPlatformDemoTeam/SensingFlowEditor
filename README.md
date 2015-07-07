@@ -29,7 +29,7 @@ To compile and build the SensingFlow Editor, install the following dependencies:
 2. Select the node created, change the Operator Name attribute from the Property view. 
 3. After finishing the work, save the diagram via ``File``-``Save`` or ``Ctrl+S``.
 
-##Load an exising processor configuration file (e.g., processor_info.xml)
+##Load an exising processor configuration file       
 1. Create a new project if there is no active project.
 2. From the Project Explorer view, right click on the project your created and select ``import``
 3. Choose ``General``-``File System``
@@ -37,3 +37,5 @@ To compile and build the SensingFlow Editor, install the following dependencies:
 5. Select the file(s) from the list on the right side and click ``Finish``
 6. From the Project Explorer view, right click on the file you added and select ``Open With``-``Other``
 7. Choose ``SensingFlow Editor`` from the list
+ 
+The top-level tag of a file to be imported should be ``Processor``, not ``ProcessorInfo``. So, you cannot import ``processor_info.xml`` in ``Symphony`` project directly.
