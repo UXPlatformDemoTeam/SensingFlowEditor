@@ -1,19 +1,15 @@
 package sensingflow.gef.editor.figure;
 
-import org.eclipse.draw2d.AbstractBorder;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.Figure;
-import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.XYLayout;
-import org.eclipse.draw2d.geometry.Insets;
-import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -34,10 +30,9 @@ public class SensingflowTaskFigure extends Figure implements SensingflowThingFig
 		Font classFont = new Font(null, "Arial", 12, SWT.BOLD);
 		nameLabel = new Label();
 		nameLabel.setFont(classFont);
-		nameLabel.setBorder(new LineBorder(ColorConstants.black, 1));
+		nameLabel.setBorder(new SensingflowLabelBorder());
 		add(nameLabel);
 		rectangle = new RectangleFigure();
-		//rectangle.setBorder(new CompartmentFigureBorder());
 		rectangle.setLayoutManager(new XYLayout());
 		rectangle.setOutline(false);
 		add(rectangle);
