@@ -12,6 +12,7 @@ import sensingflow.gef.editor.part.SensingflowOutPortEditPart;
 import sensingflow.model.SensingflowLink;
 import sensingflow.model.SensingflowNode;
 import sensingflow.model.SensingflowThing;
+import sensingflow.model.impl.SensingflowOutPortImpl;
 import sensingflow.model.impl.SensingflowSensorImpl;
 import sensingflow.model.impl.SensingflowTaskImpl;
 
@@ -38,7 +39,7 @@ public class SensingflowNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPol
 		// this host,
 		// something that we don't want to happen.
 
-		if (!(getHost().getClass().equals(SensingflowInPortEditPart.class) || getHost().getClass().equals(
+		if (!(getHost().getClass().equals(
 				SensingflowOutPortEditPart.class))) {
 			return null;
 		}
@@ -75,12 +76,13 @@ public class SensingflowNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPol
 		Command command = null;
 		// Simple link creation command.
 		if (getHost().getModel().getClass().equals(SensingflowTaskImpl.class)
-				|| getHost().getModel().getClass().equals(SensingflowSensorImpl.class))
+				|| getHost().getModel().getClass().equals(SensingflowSensorImpl.class) 
+				|| getHost().getModel().getClass().equals(SensingflowOutPortImpl.class))
 			return null;
+		
 		SensingflowLinkCreateCommand linkCreateCommand = (SensingflowLinkCreateCommand) request.getStartCommand();
 		linkCreateCommand.setTarget((SensingflowNode) getHost().getModel());
 		command = linkCreateCommand;
-
 		return command;
 	}
 
