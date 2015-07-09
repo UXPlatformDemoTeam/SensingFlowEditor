@@ -9,6 +9,7 @@ import org.eclipse.gef.requests.ReconnectRequest;
 import sensingflow.gef.editor.command.SensingflowLinkCreateCommand;
 import sensingflow.gef.editor.part.SensingflowInPortEditPart;
 import sensingflow.gef.editor.part.SensingflowOutPortEditPart;
+import sensingflow.model.SensingflowInPort;
 import sensingflow.model.SensingflowLink;
 import sensingflow.model.SensingflowNode;
 import sensingflow.model.SensingflowThing;
@@ -78,6 +79,10 @@ public class SensingflowNodeGraphicalNodeEditPolicy extends GraphicalNodeEditPol
 		if (getHost().getModel().getClass().equals(SensingflowTaskImpl.class)
 				|| getHost().getModel().getClass().equals(SensingflowSensorImpl.class) 
 				|| getHost().getModel().getClass().equals(SensingflowOutPortImpl.class))
+			return null;
+		
+		// only one input link
+		if(((SensingflowInPort)getHost().getModel()).getIncomingLinks().size() == 1)
 			return null;
 		
 		SensingflowLinkCreateCommand linkCreateCommand = (SensingflowLinkCreateCommand) request.getStartCommand();
