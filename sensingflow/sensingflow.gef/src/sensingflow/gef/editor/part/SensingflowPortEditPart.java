@@ -34,7 +34,6 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 		SensingflowPort model = (SensingflowPort)getModel();
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
 		
-		//figure.getNameLabel().setText(model.getId());
 		parent.setLayoutConstraint(this, figure, model.getConstraints());
 	}
 

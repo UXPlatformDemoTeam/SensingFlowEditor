@@ -134,30 +134,30 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 				int numports = getModelChildren().size();
 
 				// DKIM: Remove unnecessary ports
-				if (inport > Integer.parseInt(numInput)) {
-					for (int i = 0; i < numports; i++) {
-						SensingflowNode node = getModelChildren().get(i);
-						if (node.getClass().equals(SensingflowInPortImpl.class)) {
-							((SensingflowTask) getModel()).getInPorts().remove(node);
-							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
-							command.setNode(node);
-							command.execute();
-							break;
-						}
-					}
-				}
-				if (outport > Integer.parseInt(numOutput)) {
-					for (int i = 0; i < numports; i++) {
-						SensingflowNode node = getModelChildren().get(i);
-						if (node.getClass().equals(SensingflowOutPortImpl.class)) {
-							((SensingflowTask) getModel()).getOutPorts().remove(node);
-							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
-							command.setNode(node);
-							command.execute();
-							break;
-						}
-					}
-				}
+//				if (inport > Integer.parseInt(numInput)) {
+//					for (int i = 0; i < numports; i++) {
+//						SensingflowNode node = getModelChildren().get(i);
+//						if (node.getClass().equals(SensingflowInPortImpl.class)) {
+//							((SensingflowTask) getModel()).getInPorts().remove(node);
+//							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
+//							command.setNode(node);
+//							command.execute();
+//							break;
+//						}
+//					}
+//				}
+//				if (outport > Integer.parseInt(numOutput)) {
+//					for (int i = 0; i < numports; i++) {
+//						SensingflowNode node = getModelChildren().get(i);
+//						if (node.getClass().equals(SensingflowOutPortImpl.class)) {
+//							((SensingflowTask) getModel()).getOutPorts().remove(node);
+//							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
+//							command.setNode(node);
+//							command.execute();
+//							break;
+//						}
+//					}
+//				}
 				if (inport < Integer.parseInt(numInput)) {
 					SensingflowInPortFactory newinport = new SensingflowInPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
@@ -213,7 +213,6 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					Point clickLocation = new Point(130, (outport + 1) * 20);
 					command.setNewConstraint(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.execute();
-
 					outport++;
 				}
 			}

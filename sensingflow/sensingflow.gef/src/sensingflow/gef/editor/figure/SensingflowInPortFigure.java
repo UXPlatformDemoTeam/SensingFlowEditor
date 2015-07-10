@@ -20,6 +20,7 @@ public class SensingflowInPortFigure extends Figure implements SensingflowPortFi
 	public SensingflowInPortFigure() {
         setLayoutManager(new XYLayout());
         nameLabel = new Label();
+        nameLabel.setText("abc");
         add(nameLabel);
         ellipse = new Ellipse();
         ellipse.setFill(true);
