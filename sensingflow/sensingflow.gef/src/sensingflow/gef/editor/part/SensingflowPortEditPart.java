@@ -16,6 +16,7 @@ import org.eclipse.jface.viewers.TextCellEditor;
 
 import sensingflow.gef.editor.figure.SensingflowPortFigure;
 import sensingflow.model.SensingflowPort;
+import sensingflow.model.impl.SensingflowOutPortImpl;
 
 public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 
@@ -34,6 +35,10 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 		SensingflowPort model = (SensingflowPort)getModel();
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
 		
+		if (model.getClass().equals(SensingflowOutPortImpl.class))
+			figure.getNameLabel().setText("    Out");
+		else
+			figure.getNameLabel().setText("In");
 		parent.setLayoutConstraint(this, figure, model.getConstraints());
 	}
 

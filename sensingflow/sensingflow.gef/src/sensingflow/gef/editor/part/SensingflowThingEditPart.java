@@ -43,7 +43,7 @@ import sensingflow.model.impl.SensingflowTaskImpl;
 
 public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 
-	private static final Dimension DEFAULT_PORT_DIMENSION = new Dimension(10, 10);
+	private static final Dimension DEFAULT_PORT_DIMENSION = new Dimension(50, 13);
 
 	public SensingflowThingEditPart() {
 		super();
@@ -80,7 +80,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					SensingflowOutPortFactory newoutport = new SensingflowOutPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
 					SensingflowOutPort newPort = (SensingflowOutPort) newoutport.getNewObject();
-					Point clickLocation = new Point(110, (outport + 1) * 20);
+					Point clickLocation = new Point(110, (outport) * 20 + 10);
 					command.setConstraints(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.setContainer((SensingflowContainer) getModel());
 					command.setNode(newPort);
@@ -161,7 +161,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 				if (inport < Integer.parseInt(numInput)) {
 					SensingflowInPortFactory newinport = new SensingflowInPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
-					Point clickLocation = new Point(10, (inport + 1) * 20);
+					Point clickLocation = new Point(10, (inport) * 20 + 10);
 					command.setConstraints(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.setContainer((SensingflowContainer) getModel());
 					command.setNode((SensingflowNode) (newinport.getNewObject()));
@@ -172,7 +172,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					SensingflowOutPortFactory newoutport = new SensingflowOutPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
 					SensingflowOutPort newPort = (SensingflowOutPort) newoutport.getNewObject();
-					Point clickLocation = new Point(130, (outport + 1) * 20);
+					Point clickLocation = new Point(95, (outport) * 20 + 10);
 					command.setConstraints(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.setContainer((SensingflowContainer) getModel());
 					command.setNode(newPort);
@@ -205,12 +205,12 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 			for (SensingflowNode node : getModelChildren()) {
 				command.setNode(node);
 				if (node.getClass().equals(SensingflowInPortImpl.class)) {
-					Point clickLocation = new Point(10, (inport + 1) * 20);
+					Point clickLocation = new Point(10, (inport) * 20 + 10);
 					command.setNewConstraint(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.execute();
 					inport++;
 				} else if (node.getClass().equals(SensingflowOutPortImpl.class)) {
-					Point clickLocation = new Point(130, (outport + 1) * 20);
+					Point clickLocation = new Point(95, (outport) * 20 + 10);
 					command.setNewConstraint(new Rectangle(clickLocation, DEFAULT_PORT_DIMENSION));
 					command.execute();
 					outport++;
@@ -218,9 +218,9 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 			}
 			int max = (inport > outport) ? inport : outport;
 			Rectangle r = ((SensingflowNode) getModel()).getConstraints();
-			if (r.height <= (max + 1) * 20 || r.height > (max + 1) * 20 + 20) {
+			if (r.height <= (max) * 20 + 10 || r.height > (max) * 20 + 30) {
 				command.setNode((SensingflowNode) getModel());
-				command.setNewConstraint(new Rectangle(r.getLocation(), new Dimension(r.width, (max + 1) * 20 + 20)));
+				command.setNewConstraint(new Rectangle(r.getLocation(), new Dimension(r.width, (max) * 20 + 30)));
 				command.execute();
 			}
 		}

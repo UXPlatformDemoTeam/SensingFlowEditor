@@ -9,38 +9,51 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
+import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.ToolbarLayout;
 import org.eclipse.draw2d.XYLayout;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
 
 public class SensingflowInPortFigure extends Figure implements SensingflowPortFigure {
 	private Label nameLabel;
-	private Ellipse ellipse;
+	private RectangleFigure rectangle;
 	private ConnectionAnchor connectionAnchor;
-	
+	public static Color classColor = new Color(null,255,255,0);
+
 	public SensingflowInPortFigure() {
-        setLayoutManager(new XYLayout());
+		ToolbarLayout layout = new ToolbarLayout(true);
+		layout.setSpacing(2);
+		setLayoutManager(layout);
+		setOpaque(true);
+
+		rectangle = new RectangleFigure();
+		rectangle.setOutline(false);
+		rectangle.setSize(12,12);
+		rectangle.setBorder(new LineBorder(ColorConstants.blue, 2));
+		add(rectangle);
+		Font classFont = new Font(null, "Arial", 9, SWT.BOLD);
         nameLabel = new Label();
-        nameLabel.setText("abc");
+        nameLabel.setFont(classFont);
+        nameLabel.setText("In");
         add(nameLabel);
-        ellipse = new Ellipse();
-        ellipse.setFill(true);
-        ellipse.setLayoutManager(new XYLayout());
-        add(ellipse);
 	}
 	
 	@Override
 	public IFigure getContentPane() {
-	    return ellipse;
+	    return rectangle;
 	}
 	
 	@Override protected void paintFigure(Graphics graphics) {
-		Rectangle r = getBounds().getCopy();
-		setConstraint(ellipse, new Rectangle(0, 0, r.width, r.height));
-		setConstraint(nameLabel, new Rectangle(0, 0, r.width, r.height));
-		ellipse.setForegroundColor(ColorConstants.blue);
-		ellipse.setBorder(new LineBorder(2));
-		ellipse.invalidate();
-        nameLabel.invalidate();     
+		//Rectangle r = getBounds().getCopy();
+		//setConstraint(rectangle, new Rectangle(0, 0, 100, 100));
+		//setConstraint(nameLabel, new Rectangle(0, 0, r.width, r.height));
+//		rectangle.setForegroundColor(ColorConstants.blue);
+//		rectangle.setBorder(new LineBorder(2));
+	//	rectangle.invalidate();
+        //nameLabel.invalidate();     
 	}
 	
 	public Label getNameLabel() {
@@ -49,7 +62,7 @@ public class SensingflowInPortFigure extends Figure implements SensingflowPortFi
 	
 	public ConnectionAnchor getConnectionAnchor() {
 		if (connectionAnchor == null) {
-			connectionAnchor = new ChopboxAnchor(this);
+			connectionAnchor = new ChopboxAnchor(this.rectangle);
 		}
 		return connectionAnchor;
 	}

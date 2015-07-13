@@ -1,5 +1,6 @@
 package sensingflow.gef.editor.figure;
 
+import org.eclipse.draw2d.ChopboxAnchor;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.ConnectionAnchor;
 import org.eclipse.draw2d.EllipseAnchor;
@@ -65,7 +66,7 @@ public class SensingflowTaskFigure extends Figure implements SensingflowThingFig
 	 */
 	private ConnectionAnchor getConnectionAnchor() {
 		if (connectionAnchor == null) {
-			connectionAnchor = new EllipseAnchor(this);
+			connectionAnchor = new ChopboxAnchor(this.rectangle);
 		}
 		return connectionAnchor;
 	}

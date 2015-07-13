@@ -35,7 +35,7 @@ import sensingflow.gef.editor.part.SensingflowTaskEditPart;
 public class SensingflowContainerXYLayoutPolicy extends XYLayoutEditPolicy {
 
 	private static final Dimension DEFAULT_THING_DIMENSION = new Dimension(155, 120);
-	private static final Dimension DEFAULT_PORT_DIMENSION = new Dimension(10, 10);
+	private static final Dimension DEFAULT_PORT_DIMENSION = new Dimension(40, 13);
 
 	/**
 	 * Command created top change the constraints of a {@link SensingflowNode}
