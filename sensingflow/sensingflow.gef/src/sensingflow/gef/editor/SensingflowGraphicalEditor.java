@@ -96,8 +96,8 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 
 			/* DKIM: export to custom XML file */
 			System.out.println("Save to: " + spdResource.getURI());
-			HashMap<String, ArrayList<String>> node_to_inport = new HashMap<String, ArrayList<String>>();
-			HashMap<String, ArrayList<String>> node_to_outport = new HashMap<String, ArrayList<String>>();
+			HashMap<Integer, ArrayList<Integer>> node_to_inport = new HashMap<Integer, ArrayList<Integer>>();
+			HashMap<Integer, ArrayList<Integer>> node_to_outport = new HashMap<Integer, ArrayList<Integer>>();
 			getCommandStack().markSaveLocation();
 
 			SAXBuilder saxBuilder = new SAXBuilder();
@@ -120,30 +120,41 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 			for (Element elm : rootElement.getChildren()) {
 				String type = elm.getAttributeValue("operatorName");
 				if (type != null) {
+					int Port = 0;
+					int inPort = 0;
+					int outPort = 0;
+					int nodeID;
 					String tmp = elm.getAttributeValue("outPorts");
 					if (tmp != null) {
-						for (String port : tmp.split(" ")) {
-							String nodeID = port.split("//")[1].split("/")[0].replace("@nodes.", "");
-							String portID = port.split("//")[1].split("/")[1].replace("@nodes.", "");
+						nodeID = Integer.parseInt(tmp.split("//")[1].split("/")[0].replace("@nodes.", ""));
+					} else {
+						tmp = elm.getAttributeValue("inPorts");
+						nodeID = Integer.parseInt(tmp.split("//")[1].split("/")[0].replace("@nodes.", ""));
+					}
+					for (Element elm2 : elm.getChildren()) {
+						Namespace XSI = Namespace.getNamespace("xsi", "http://www.w3.org/2001/XMLSchema-instance");
+						String tmp2 = elm2.getAttributeValue("type", XSI);
+						if (tmp2 != null) {
 							if (node_to_outport.containsKey(nodeID) == false) {
-								node_to_outport.put(nodeID, new ArrayList<String>());
+								node_to_outport.put(nodeID, new ArrayList<Integer>());
 							}
-							node_to_outport.get(nodeID).add(portID);
-						}
-					}
-					tmp = elm.getAttributeValue("inPorts");
-					if (tmp != null) {
-						for (String port : tmp.split(" ")) {
-							String nodeID = port.split("//")[1].split("/")[0].replace("@nodes.", "");
-							String portID = port.split("//")[1].split("/")[1].replace("@nodes.", "");
 							if (node_to_inport.containsKey(nodeID) == false) {
-								node_to_inport.put(nodeID, new ArrayList<String>());
+								node_to_inport.put(nodeID, new ArrayList<Integer>());
 							}
-							node_to_inport.get(nodeID).add(portID);
+							if (tmp2.equals("sensingflow:SensingflowOutPort")) {
+								node_to_outport.get(nodeID).add(Port);
+								Port++;
+							} else {
+								node_to_inport.get(nodeID).add(Port);
+								Port++;
+							}
 						}
 					}
+					//nodeID++;
 				}
 			}
+			System.out.println(node_to_inport);
+			System.out.println(node_to_outport);
 			for (Element elm : rootElement.getChildren()) {
 				String type = elm.getAttributeValue("operatorName");
 				if (type != null) {
@@ -189,6 +200,10 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 					child.setAttribute(attr);
 					attr = new Attribute("constraints", constraint);
 					child.setAttribute(attr);
+					attr = new Attribute("numIn", Integer.toString(node_to_inport.get(Integer.parseInt(ID)).size()));
+					child.setAttribute(attr);
+					attr = new Attribute("numOut", Integer.toString(node_to_outport.get(Integer.parseInt(ID)).size()));
+					child.setAttribute(attr);
 					newRootElement.addContent(child);
 				}
 				if (elm.getName() == "links") {
@@ -202,16 +217,16 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 
 					Attribute attr = new Attribute("From", Integer.toString(SID));
 					child.setAttribute(attr);
-					String FromIf = Integer.toString(node_to_outport.get(Integer.toString(SID)).indexOf(
-							Integer.toString(SIF)))
+					String FromIf = Integer.toString(node_to_outport.get(SID).indexOf(SIF))
 							+ Integer.toString(nodeIf[SID][SIF]++);
 					if (FromIf.length() != 3)
-						FromIf = "0"+FromIf;
+						FromIf = "0" + FromIf;
 					attr = new Attribute("FromIf", FromIf);
 					child.setAttribute(attr);
 					attr = new Attribute("To", TID);
 					child.setAttribute(attr);
-					attr = new Attribute("ToIf", Integer.toString(node_to_inport.get(TID).indexOf(TIF)));
+					attr = new Attribute("ToIf", Integer.toString(node_to_inport.get(Integer.parseInt(TID)).indexOf(
+							Integer.parseInt(TIF))));
 					child.setAttribute(attr);
 					newRootElement.addContent(child);
 				}
@@ -345,8 +360,8 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 							attr.setNamespace(XSI);
 							child.setAttribute(attr);
 
-							int numOutput = Integer.parseInt(tmp.getNumOutput());
-							int numInput = Integer.parseInt(tmp.getNumInput());
+							int numInput = Integer.parseInt(elm.getAttributeValue("numIn"));//Integer.parseInt(tmp.getNumOutput());
+							int numOutput = Integer.parseInt(elm.getAttributeValue("numOut"));//Integer.parseInt(tmp.getNumInput());
 							numOutputID[Integer.parseInt(ID)] = numOutput;
 							String outports = "";
 							for (int i = 0; i < numOutput; i++) {

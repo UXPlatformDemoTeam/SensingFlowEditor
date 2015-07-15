@@ -35,14 +35,14 @@ public enum SensingflowSensorType implements Enumerator {
 	 * @ordered
 	 */
 	SENSING_SOUND(1, "SensingSound", "SensingSound"), /**
-	 * The '<em><b>Accel Default</b></em>' literal object.
+	 * The '<em><b>Sensing Accel Default</b></em>' literal object.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #ACCEL_DEFAULT_VALUE
+	 * @see #SENSING_ACCEL_DEFAULT_VALUE
 	 * @generated
 	 * @ordered
 	 */
-	ACCEL_DEFAULT(2, "AccelDefault", "AccelDefault");
+	SENSING_ACCEL_DEFAULT(2, "SensingAccelDefault", "SensingAccelDefault");
 
 	/**
 	 * The '<em><b>Default Sensor</b></em>' literal value.
@@ -75,19 +75,19 @@ public enum SensingflowSensorType implements Enumerator {
 	public static final int SENSING_SOUND_VALUE = 1;
 
 	/**
-	 * The '<em><b>Accel Default</b></em>' literal value.
+	 * The '<em><b>Sensing Accel Default</b></em>' literal value.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of '<em><b>Accel Default</b></em>' literal object isn't clear,
+	 * If the meaning of '<em><b>Sensing Accel Default</b></em>' literal object isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @see #ACCEL_DEFAULT
-	 * @model name="AccelDefault"
+	 * @see #SENSING_ACCEL_DEFAULT
+	 * @model name="SensingAccelDefault"
 	 * @generated
 	 * @ordered
 	 */
-	public static final int ACCEL_DEFAULT_VALUE = 2;
+	public static final int SENSING_ACCEL_DEFAULT_VALUE = 2;
 
 	/**
 	 * An array of all the '<em><b>Sensor Type</b></em>' enumerators.
@@ -99,7 +99,7 @@ public enum SensingflowSensorType implements Enumerator {
 		new SensingflowSensorType[] {
 			DEFAULT_SENSOR,
 			SENSING_SOUND,
-			ACCEL_DEFAULT,
+			SENSING_ACCEL_DEFAULT,
 		};
 
 	/**
@@ -152,7 +152,7 @@ public enum SensingflowSensorType implements Enumerator {
 		switch (value) {
 			case DEFAULT_SENSOR_VALUE: return DEFAULT_SENSOR;
 			case SENSING_SOUND_VALUE: return SENSING_SOUND;
-			case ACCEL_DEFAULT_VALUE: return ACCEL_DEFAULT;
+			case SENSING_ACCEL_DEFAULT_VALUE: return SENSING_ACCEL_DEFAULT;
 		}
 		return null;
 	}

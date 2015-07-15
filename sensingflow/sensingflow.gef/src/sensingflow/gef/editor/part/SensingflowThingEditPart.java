@@ -29,7 +29,6 @@ import sensingflow.gef.editor.figure.SensingflowThingFigure;
 import sensingflow.gef.editor.policy.SensingflowThingDirectEditPolicy;
 import sensingflow.model.SensingflowContainer;
 import sensingflow.model.SensingflowNode;
-import sensingflow.model.SensingflowInPort;
 import sensingflow.model.SensingflowOutPort;
 import sensingflow.model.SensingflowSensor;
 import sensingflow.model.SensingflowSensorType;
@@ -63,6 +62,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
 		int inport = 0;
 		int outport = 0;
+
 		for (SensingflowNode node : getModelChildren()) {
 			if (node.getClass().equals(SensingflowInPortImpl.class)) {
 				inport++;
@@ -86,6 +86,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					command.setNode(newPort);
 					command.setThing((SensingflowThing) getModel());
 					command.execute();
+					return;
 				}
 				String DeivceId = SensingflowGraphicalEditor.thingInfo.get(
 						((SensingflowSensor) getModel()).getOperatorName().toString()).getDeviceId();
@@ -108,7 +109,7 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 						}
 					}
 					break;
-				case ACCEL_DEFAULT:
+				case SENSING_ACCEL_DEFAULT:
 					for (SensingflowNode node : getModelChildren()) {
 						if (node.getClass().equals(SensingflowOutPortImpl.class)) {
 							((SensingflowOutPort) node).setFrameSize(6000);
@@ -126,38 +127,12 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 			}
 
 		} else if (getModel().getClass().equals(SensingflowTaskImpl.class)) {
+
 			if (((SensingflowTask) getModel()).getOperatorName() != SensingflowTaskType.DEFAULT_TASK) {
 				String numInput = SensingflowGraphicalEditor.thingInfo.get(
 						((SensingflowTask) getModel()).getOperatorName().toString()).getNumInput();
 				String numOutput = SensingflowGraphicalEditor.thingInfo.get(
 						((SensingflowTask) getModel()).getOperatorName().toString()).getNumOutput();
-				int numports = getModelChildren().size();
-
-				// DKIM: Remove unnecessary ports
-//				if (inport > Integer.parseInt(numInput)) {
-//					for (int i = 0; i < numports; i++) {
-//						SensingflowNode node = getModelChildren().get(i);
-//						if (node.getClass().equals(SensingflowInPortImpl.class)) {
-//							((SensingflowTask) getModel()).getInPorts().remove(node);
-//							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
-//							command.setNode(node);
-//							command.execute();
-//							break;
-//						}
-//					}
-//				}
-//				if (outport > Integer.parseInt(numOutput)) {
-//					for (int i = 0; i < numports; i++) {
-//						SensingflowNode node = getModelChildren().get(i);
-//						if (node.getClass().equals(SensingflowOutPortImpl.class)) {
-//							((SensingflowTask) getModel()).getOutPorts().remove(node);
-//							SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
-//							command.setNode(node);
-//							command.execute();
-//							break;
-//						}
-//					}
-//				}
 				if (inport < Integer.parseInt(numInput)) {
 					SensingflowInPortFactory newinport = new SensingflowInPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
@@ -167,8 +142,11 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					command.setNode((SensingflowNode) (newinport.getNewObject()));
 					command.setTask((SensingflowTask) getModel());
 					command.execute();
+					return;
 				}
 				if (outport < Integer.parseInt(numOutput)) {
+					System.out.println(Integer.toString(outport) + " " + numOutput + " "
+							+ ((SensingflowTask) getModel()).getOperatorName().toString());
 					SensingflowOutPortFactory newoutport = new SensingflowOutPortFactory();
 					SensingflowNodeCreateCommand command = new SensingflowNodeCreateCommand();
 					SensingflowOutPort newPort = (SensingflowOutPort) newoutport.getNewObject();
@@ -178,24 +156,51 @@ public abstract class SensingflowThingEditPart extends SensingflowNodeEditPart {
 					command.setNode(newPort);
 					command.setThing((SensingflowThing) getModel());
 					command.execute();
+					return;
+				}
+				boolean typeChanged = (((SensingflowTask) getModel()).getOldOperatorName() != ((SensingflowTask) getModel())
+						.getOperatorName() && ((SensingflowTask) getModel()).getOperatorName() != SensingflowTaskType.DEFAULT_TASK);
+
+				if (typeChanged) {
+					int numports = getModelChildren().size();
+					// DKIM: Remove unnecessary ports
+					if (((SensingflowTask) getModel()).getOldOperatorName() != SensingflowTaskType.DEFAULT_TASK) {
+						if (inport > Integer.parseInt(numInput)) {
+							for (int i = 0; i < numports; i++) {
+								SensingflowNode node = getModelChildren().get(i);
+								if (node.getClass().equals(SensingflowInPortImpl.class)) {
+									((SensingflowTask) getModel()).getInPorts().remove(node);
+									SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
+									command.setNode(node);
+									command.execute();
+									return;
+								}
+							}
+						}
+						if (outport > Integer.parseInt(numOutput)) {
+							for (int i = 0; i < numports; i++) {
+								SensingflowNode node = getModelChildren().get(i);
+								if (node.getClass().equals(SensingflowOutPortImpl.class)) {
+									((SensingflowTask) getModel()).getOutPorts().remove(node);
+									SensingflowNodeDeleteCommand command = new SensingflowNodeDeleteCommand();
+									command.setNode(node);
+									command.execute();
+									return;
+								}
+							}
+						}
+					}
+					String DeivceId = SensingflowGraphicalEditor.thingInfo.get(
+							((SensingflowTask) getModel()).getOperatorName().toString()).getDeviceId();
+					String LogicParam = SensingflowGraphicalEditor.thingInfo.get(
+							((SensingflowTask) getModel()).getOperatorName().toString()).getlogic();
+					((SensingflowTask) getModel()).setOldOperatorName(((SensingflowTask) getModel()).getOperatorName());
+					((SensingflowTask) getModel()).setDeviceId(DeivceId);
+					((SensingflowTask) getModel()).setLogicParameter(LogicParam);
+					((SensingflowTask) getModel()).setName(((SensingflowTask) getModel()).getOperatorName().toString());
 				}
 			}
-			boolean typeChanged = (((SensingflowTask) getModel()).getOldOperatorName() != ((SensingflowTask) getModel())
-					.getOperatorName() && ((SensingflowTask) getModel()).getOperatorName() != SensingflowTaskType.DEFAULT_TASK);
 
-			if (typeChanged) {
-				String numOutput = SensingflowGraphicalEditor.thingInfo.get(
-						((SensingflowTask) getModel()).getOperatorName().toString()).getNumOutput();
-
-				String DeivceId = SensingflowGraphicalEditor.thingInfo.get(
-						((SensingflowTask) getModel()).getOperatorName().toString()).getDeviceId();
-				String LogicParam = SensingflowGraphicalEditor.thingInfo.get(
-						((SensingflowTask) getModel()).getOperatorName().toString()).getlogic();
-				((SensingflowTask) getModel()).setOldOperatorName(((SensingflowTask) getModel()).getOperatorName());
-				((SensingflowTask) getModel()).setDeviceId(DeivceId);
-				((SensingflowTask) getModel()).setLogicParameter(LogicParam);
-				((SensingflowTask) getModel()).setName(((SensingflowTask) getModel()).getOperatorName().toString());
-			}
 		}
 		if (getModel().getClass().equals(SensingflowSensorImpl.class)
 				|| getModel().getClass().equals(SensingflowTaskImpl.class)) {

@@ -23,6 +23,7 @@ public class SensingflowGraphicalEditorPalette extends PaletteRoot {
 		addSensingflowSensorTool();
 		addSensingflowTaskTool();
 		addSensingflowOutPortTool();
+		addSensingflowInPortTool();
 		addSensingflowLinkTool();
 	}
 
@@ -54,6 +55,13 @@ public class SensingflowGraphicalEditorPalette extends PaletteRoot {
 	private void addSensingflowOutPortTool() {
 		CreationToolEntry entry = new CreationToolEntry("OutPort",
 				"Create a new OutPort", new SensingflowOutPortFactory(), null, null);
+		entry.setToolClass(CreationAndDirectEditTool.class);
+		group.add(entry);
+	}
+	
+	private void addSensingflowInPortTool() {
+		CreationToolEntry entry = new CreationToolEntry("InPort",
+				"Create a new InPort", new SensingflowInPortFactory(), null, null);
 		entry.setToolClass(CreationAndDirectEditTool.class);
 		group.add(entry);
 	}

@@ -67,7 +67,7 @@ Package sensingflow <sensingflow.kaist>
   Enum SensingflowSensorType
     Literal DefaultSensor = 0
     Literal SensingSound = 1
-    Literal AccelDefault = 2
+    Literal SensingAccelDefault = 2
 
   Enum SensingflowTaskType
     Literal DefaultTask = 0

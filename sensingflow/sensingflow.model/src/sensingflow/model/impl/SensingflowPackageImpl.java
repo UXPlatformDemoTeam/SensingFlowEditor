@@ -824,7 +824,7 @@ public class SensingflowPackageImpl extends EPackageImpl implements SensingflowP
 		initEEnum(sensingflowSensorTypeEEnum, SensingflowSensorType.class, "SensingflowSensorType");
 		addEEnumLiteral(sensingflowSensorTypeEEnum, SensingflowSensorType.DEFAULT_SENSOR);
 		addEEnumLiteral(sensingflowSensorTypeEEnum, SensingflowSensorType.SENSING_SOUND);
-		addEEnumLiteral(sensingflowSensorTypeEEnum, SensingflowSensorType.ACCEL_DEFAULT);
+		addEEnumLiteral(sensingflowSensorTypeEEnum, SensingflowSensorType.SENSING_ACCEL_DEFAULT);
 
 		initEEnum(sensingflowTaskTypeEEnum, SensingflowTaskType.class, "SensingflowTaskType");
 		addEEnumLiteral(sensingflowTaskTypeEEnum, SensingflowTaskType.DEFAULT_TASK);

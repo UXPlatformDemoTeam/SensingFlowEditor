@@ -4,7 +4,7 @@
 			<Output frameSize="30720" subFrameSize="512" subFrameSlidingSize="512" frameInterval="30720" />
 		</Sensor>
 
-		<Sensor operatorName="AccelDefault" deviceId="MobileAccelGyroSensor" logic="50">
+		<Sensor operatorName="SensingAccelDefault" deviceId="MobileAccelGyroSensor" logic="50">
 			<Output frameSize="6000" subFrameSize="180" subFrameSlidingSize="180" frameInterval="6000" />
 		</Sensor>
 	</SensorList>
