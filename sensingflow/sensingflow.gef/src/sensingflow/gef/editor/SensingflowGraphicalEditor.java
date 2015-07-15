@@ -153,8 +153,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 					//nodeID++;
 				}
 			}
-			System.out.println(node_to_inport);
-			System.out.println(node_to_outport);
 			for (Element elm : rootElement.getChildren()) {
 				String type = elm.getAttributeValue("operatorName");
 				if (type != null) {
@@ -240,7 +238,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 				exportFile.createNewFile();
 			}
 			xmlOutput.output(exportDoc, new FileWriter(exportPath));
-			System.out.println(xmlOutput.outputString(exportDoc));
+			//System.out.println(xmlOutput.outputString(exportDoc));
 
 		} catch (IOException e) {
 			// TODO do something smarter.
@@ -379,7 +377,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 								for (SensingflowConnInfo tmpconn : conn) {
 									if (Integer.parseInt(tmpconn.getFromID()) == Integer.parseInt(ID)) {
 										if (tmpconn.getFromIf() != null) {
-											System.out.println(tmpconn.getFromIf());
 											int If = Integer.parseInt(tmpconn.getFromIf().substring(0, 2));
 											if (If != i)
 												continue;
@@ -466,7 +463,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 						links.setAttribute(attr);
 						attr = new Attribute("target", "//@nodes." + NodeID.get(To) + "/@nodes." + PortID);
 						links.setAttribute(attr);
-						System.out.println(links.getAttributes().get(0) + " " + links.getAttributes().get(1));
 						newRootElement.addContent(links);
 					}
 					exportDoc.setRootElement(newRootElement);
