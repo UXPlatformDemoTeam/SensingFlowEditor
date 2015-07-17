@@ -19,31 +19,36 @@ import org.eclipse.swt.graphics.Font;
 
 public class SensingflowInPortFigure extends Figure implements SensingflowPortFigure {
 	private Label nameLabel;
-	private RectangleFigure rectangle;
+	private Ellipse ellipse;
 	private ConnectionAnchor connectionAnchor;
-	public static Color classColor = new Color(null,255,255,0);
-
+	public static Color colorFgCon = new Color(null, 80, 156, 50 );
+	public static Color colorBgCon = new Color(null, 112, 173, 71 );
+	public static Color colorFg = new Color(null, 165, 165, 165 );
+	public static Color colorBg = new Color(null, 200, 200, 200 );
+	public static Color colorText = new Color(null, 76, 76, 76 );
+	
 	public SensingflowInPortFigure() {
 		ToolbarLayout layout = new ToolbarLayout(true);
 		layout.setSpacing(2);
 		setLayoutManager(layout);
 		setOpaque(true);
 
-		rectangle = new RectangleFigure();
-		rectangle.setOutline(false);
-		rectangle.setSize(12,12);
-		rectangle.setBorder(new LineBorder(ColorConstants.blue, 2));
-		add(rectangle);
-		Font classFont = new Font(null, "Arial", 9, SWT.BOLD);
+		ellipse = new Ellipse();
+		ellipse.setForegroundColor(colorFg);
+		ellipse.setBackgroundColor(colorBg);
+		ellipse.setSize(11, 11);
+		add(ellipse);
+
+		Font classFont = new Font(null, "Arial", 9, SWT.NORMAL);
         nameLabel = new Label();
         nameLabel.setFont(classFont);
-        nameLabel.setText("In");
+        nameLabel.setForegroundColor(colorText);
         add(nameLabel);
 	}
 	
 	@Override
 	public IFigure getContentPane() {
-	    return rectangle;
+	    return ellipse;
 	}
 	
 	@Override protected void paintFigure(Graphics graphics) {
@@ -56,13 +61,26 @@ public class SensingflowInPortFigure extends Figure implements SensingflowPortFi
         //nameLabel.invalidate();     
 	}
 	
+	public void setConnection(boolean b){
+		if( b )
+		{
+			ellipse.setForegroundColor(colorFgCon);
+			ellipse.setBackgroundColor(colorBgCon);
+		}
+		else
+		{
+			ellipse.setForegroundColor(colorFg);
+			ellipse.setBackgroundColor(colorBg);		
+		}
+	}
+	
 	public Label getNameLabel() {
 		return nameLabel;
 	}
 	
 	public ConnectionAnchor getConnectionAnchor() {
 		if (connectionAnchor == null) {
-			connectionAnchor = new ChopboxAnchor(this.rectangle);
+			connectionAnchor = new ChopboxAnchor(this.ellipse);
 		}
 		return connectionAnchor;
 	}

@@ -58,7 +58,9 @@ public class SensingflowLinkEditPart extends AbstractConnectionEditPart {
 	 * Create a {@link PolylineConnection} with a {@link BendpointConnectionRouter}
 	 */
 	@Override protected PolylineConnection createFigure() {
+		
 		PolylineConnection conn = new PolylineConnection();
+		conn.setLineWidth(2);
 		switch(((SensingflowLink)getModel()).getRouterKind()) {
 		case BENDPOINT:
 		    conn.setConnectionRouter(new BendpointConnectionRouter());
@@ -68,6 +70,7 @@ public class SensingflowLinkEditPart extends AbstractConnectionEditPart {
 		    break;
 		}
 		return conn; 
+
 	}
 	
 	@Override protected void refreshVisuals() {

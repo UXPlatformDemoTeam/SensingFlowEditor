@@ -26,8 +26,9 @@ public abstract class SensingflowNodeEditPart extends AbstractGraphicalEditPart 
 
     public SensingflowNodeEditPart() {
         super();
-        adapter = new SensingflowNodeAdapter();
+    	adapter = new SensingflowNodeAdapter();
     }
+    
 
     @Override
     protected List<SensingflowLink> getModelSourceConnections() {
@@ -105,6 +106,7 @@ public abstract class SensingflowNodeEditPart extends AbstractGraphicalEditPart 
          */
         @Override public void notifyChanged(Notification notification) {
             refresh();
+            
         }
     
         @Override public Notifier getTarget() {

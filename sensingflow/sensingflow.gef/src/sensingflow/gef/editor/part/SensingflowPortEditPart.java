@@ -5,8 +5,13 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.gef.CompoundSnapToHelper;
+import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gef.NodeListener;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.SnapToGeometry;
 import org.eclipse.gef.SnapToGrid;
@@ -15,6 +20,7 @@ import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
 import org.eclipse.jface.viewers.TextCellEditor;
 
 import sensingflow.gef.editor.figure.SensingflowPortFigure;
+import sensingflow.model.SensingflowNode;
 import sensingflow.model.SensingflowPort;
 import sensingflow.model.impl.SensingflowOutPortImpl;
 
@@ -22,6 +28,42 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 
 	public SensingflowPortEditPart() {
 		super();
+		
+		NodeListener listener = new NodeListener()
+		{
+
+			@Override
+			public void removingSourceConnection(ConnectionEditPart connection,
+					int index) {
+				SensingflowPortFigure figure = (SensingflowPortFigure)getFigure();
+				figure.setConnection(false);
+			}
+
+			@Override
+			public void removingTargetConnection(ConnectionEditPart connection,
+					int index) {		
+				SensingflowPortFigure figure = (SensingflowPortFigure)getFigure();
+				figure.setConnection(false);
+			}
+
+			@Override
+			public void sourceConnectionAdded(ConnectionEditPart connection,
+					int index) {
+				SensingflowPortFigure figure = (SensingflowPortFigure)getFigure();
+				figure.setConnection(true);
+			}
+
+			@Override
+			public void targetConnectionAdded(ConnectionEditPart connection,
+					int index) {	
+				SensingflowPortFigure figure = (SensingflowPortFigure)getFigure();
+				figure.setConnection(true);
+			}
+			
+			
+		};
+		
+		addNodeListener(listener);
 	}
 	
 	@Override protected void createEditPolicies() {
@@ -36,9 +78,9 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
 		
 		if (model.getClass().equals(SensingflowOutPortImpl.class))
-			figure.getNameLabel().setText("    Out");
+			figure.getNameLabel().setText("   OUT");
 		else
-			figure.getNameLabel().setText("In");
+			figure.getNameLabel().setText("IN");
 		parent.setLayoutConstraint(this, figure, model.getConstraints());
 	}
 
@@ -81,5 +123,7 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
         }
         return super.getAdapter(key);
     }   
+    
+
     
 }

@@ -8,40 +8,55 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.LineBorder;
 import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.ToolbarLayout;
+import org.eclipse.draw2d.Triangle;
 import org.eclipse.draw2d.XYLayout;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 
-public class SensingflowSensorFigure extends Figure implements SensingflowThingFigure {
-	public static Color classColor = new Color(null, 206, 255, 231);
+public class SensingflowSensorFigure extends RoundedRectangle implements SensingflowThingFigure {
+	public static Color colorFg = new Color(null, 91, 155, 213 );
+	public static Color colorBg = new Color(null, 162, 192, 229 );
+	public static Color colorText = new Color(null, 76, 76, 76 );
 	private Label nameLabel;
 	private RectangleFigure rectangle;
 	private ConnectionAnchor connectionAnchor;
+	private SensingflowLabelBorder labelBorder;
+
 
 	public SensingflowSensorFigure() {
 		ToolbarLayout layout = new ToolbarLayout();
+	
 		setLayoutManager(layout);
-		setBorder(new LineBorder(ColorConstants.black, 1));
-		setBackgroundColor(classColor);
+		setForegroundColor(colorFg);		
+		setBackgroundColor(colorBg);
+		
 		setOpaque(true);
-		Font classFont = new Font(null, "Arial", 12, SWT.BOLD);
+		labelBorder = new SensingflowLabelBorder();
+		labelBorder.setForegroundColor(colorFg);
+		Font classFont = new Font(null, "Arial", 11, SWT.BOLD);
 		nameLabel = new Label();
 		nameLabel.setFont(classFont);
-		nameLabel.setBorder(new SensingflowLabelBorder());
+		nameLabel.setBorder(labelBorder);
+		nameLabel.setForegroundColor(colorText);
 		add(nameLabel);
+		
 		rectangle = new RectangleFigure();
 		rectangle.setLayoutManager(new XYLayout());
 		rectangle.setOutline(false);
+		rectangle.setAlpha(0);
 		add(rectangle);
+
 	}
 
 	@Override
 	public IFigure getContentPane() {
 		return rectangle;
 	}
-
+	
 	// @Override protected void paintFigure(Graphics graphics) {
 	// Rectangle r = getBounds().getCopy();
 	// setConstraint(rectangle, new Rectangle(0, 0, r.width, r.height));

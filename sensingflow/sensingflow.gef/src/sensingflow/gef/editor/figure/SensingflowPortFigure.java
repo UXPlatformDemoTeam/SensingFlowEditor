@@ -4,6 +4,7 @@ import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 
 public interface SensingflowPortFigure extends SensingflowNodeFigure {
+
 	public Label getNameLabel();
 	/**
 	 * The figure on which this figure's childs should be added
@@ -11,4 +12,6 @@ public interface SensingflowPortFigure extends SensingflowNodeFigure {
 	 * @return a figure on which child figures can be added.
 	 */
 	public IFigure getContentPane();
+	
+	public void setConnection(boolean b);
 }
