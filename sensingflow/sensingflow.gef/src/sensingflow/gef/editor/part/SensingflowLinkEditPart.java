@@ -16,6 +16,8 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.editparts.AbstractConnectionEditPart;
 import org.eclipse.gef.editpolicies.ConnectionEndpointEditPolicy;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.ImageData;
 
 import sensingflow.gef.editor.policy.SensingflowLinkBendpointEditPolicy;
 import sensingflow.gef.editor.policy.SensingflowLinkConnectionEditPolicy;
@@ -116,6 +118,9 @@ public class SensingflowLinkEditPart extends AbstractConnectionEditPart {
 		 * @param notification the change that ocured in the model.
 		 */
 		@Override public void notifyChanged(Notification notification) {
+			ImageData image = new ImageData("/home/dkim/cursor.gif");
+      		Cursor tmp = new Cursor(getViewer().getControl().getDisplay(), image,0,0);
+      		getViewer().getControl().setCursor(tmp);
 			refreshVisuals();
 		}
 

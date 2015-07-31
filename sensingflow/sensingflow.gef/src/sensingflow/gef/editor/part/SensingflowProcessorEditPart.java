@@ -2,6 +2,7 @@ package sensingflow.gef.editor.part;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.eclipse.draw2d.FreeformLayer;
 import org.eclipse.draw2d.FreeformLayout;
 import org.eclipse.draw2d.IFigure;
@@ -16,6 +17,8 @@ import org.eclipse.gef.SnapToGrid;
 import org.eclipse.gef.SnapToHelper;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.ImageData;
 
 import sensingflow.gef.editor.policy.SensingflowContainerXYLayoutPolicy;
 import sensingflow.model.SensingflowNode;
@@ -90,6 +93,9 @@ public class SensingflowProcessorEditPart extends AbstractGraphicalEditPart {
 	public class SensingflowProcessorAdapter implements Adapter {
 
 		@Override public void notifyChanged(Notification notification) {
+			ImageData image = new ImageData("/home/dkim/cursor.gif");
+      		Cursor tmp = new Cursor(getViewer().getControl().getDisplay(), image,0,0);
+      		getViewer().getControl().setVisible(false);
 			refreshChildren();
 		}
 

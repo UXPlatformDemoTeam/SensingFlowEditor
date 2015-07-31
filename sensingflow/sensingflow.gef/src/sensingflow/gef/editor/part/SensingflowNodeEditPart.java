@@ -12,6 +12,8 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.ImageData;
 
 import sensingflow.gef.editor.figure.SensingflowNodeFigure;
 import sensingflow.gef.editor.policy.SensingflowNodeComponentEditPolicy;
@@ -27,6 +29,7 @@ public abstract class SensingflowNodeEditPart extends AbstractGraphicalEditPart 
     public SensingflowNodeEditPart() {
         super();
     	adapter = new SensingflowNodeAdapter();
+    	
     }
     
 
@@ -106,7 +109,7 @@ public abstract class SensingflowNodeEditPart extends AbstractGraphicalEditPart 
          */
         @Override public void notifyChanged(Notification notification) {
             refresh();
-            
+          
         }
     
         @Override public Notifier getTarget() {

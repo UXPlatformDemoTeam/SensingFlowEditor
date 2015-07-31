@@ -25,6 +25,8 @@ import org.eclipse.gef.ui.actions.ToggleSnapToGeometryAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.gef.ui.properties.UndoablePropertySheetEntry;
 import org.eclipse.gef.ui.properties.UndoablePropertySheetPage;
+import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -72,6 +74,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 	@Override
 	protected void configureGraphicalViewer() {
 		super.configureGraphicalViewer();
+		
 		getGraphicalViewer().setEditPartFactory(new SensingflowEditPartFactory());
 		getActionRegistry().registerAction(new ToggleGridAction(getGraphicalViewer()));
 		getActionRegistry().registerAction(new ToggleSnapToGeometryAction(getGraphicalViewer()));
@@ -121,8 +124,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 				String type = elm.getAttributeValue("operatorName");
 				if (type != null) {
 					int Port = 0;
-					int inPort = 0;
-					int outPort = 0;
 					int nodeID;
 					String tmp = elm.getAttributeValue("outPorts");
 					if (tmp != null) {
@@ -150,7 +151,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 							}
 						}
 					}
-					//nodeID++;
+					// nodeID++;
 				}
 			}
 			for (Element elm : rootElement.getChildren()) {
@@ -238,7 +239,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 				exportFile.createNewFile();
 			}
 			xmlOutput.output(exportDoc, new FileWriter(exportPath));
-			//System.out.println(xmlOutput.outputString(exportDoc));
+			// System.out.println(xmlOutput.outputString(exportDoc));
 
 		} catch (IOException e) {
 			// TODO do something smarter.
@@ -340,6 +341,7 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 						}
 					}
 					HashMap<String, Integer> NodeID = new HashMap<String, Integer>();
+
 					int numNode = 0;
 					for (Element elm : rootElement.getChildren()) {
 						if (elm.getName() == "Task") {
@@ -358,8 +360,11 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 							attr.setNamespace(XSI);
 							child.setAttribute(attr);
 
-							int numInput = Integer.parseInt(elm.getAttributeValue("numIn"));//Integer.parseInt(tmp.getNumOutput());
-							int numOutput = Integer.parseInt(elm.getAttributeValue("numOut"));//Integer.parseInt(tmp.getNumInput());
+							String strtmp = elm.getAttributeValue("numIn");
+							int numInput = (strtmp!=null)?Integer.parseInt(strtmp):Integer.parseInt(tmp.getNumInput());
+							strtmp = elm.getAttributeValue("numOut");
+							int numOutput = (strtmp!=null)?Integer.parseInt(strtmp):Integer.parseInt(tmp.getNumOutput());
+						
 							numOutputID[Integer.parseInt(ID)] = numOutput;
 							String outports = "";
 							for (int i = 0; i < numOutput; i++) {
