@@ -11,8 +11,6 @@ import sensingflow.model.SensingflowContainer;
 import sensingflow.model.SensingflowLink;
 import sensingflow.model.SensingflowNode;
 import sensingflow.model.SensingflowProcessor;
-import sensingflow.model.impl.SensingflowSensorImpl;
-import sensingflow.model.impl.SensingflowTaskImpl;
 
 /**
  * Command used to delete a node.

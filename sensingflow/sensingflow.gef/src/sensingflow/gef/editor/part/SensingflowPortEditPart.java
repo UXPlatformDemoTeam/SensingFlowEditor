@@ -6,9 +6,6 @@ import java.util.List;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
 import org.eclipse.draw2d.PositionConstants;
-import org.eclipse.emf.common.notify.Adapter;
-import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.gef.CompoundSnapToHelper;
 import org.eclipse.gef.ConnectionEditPart;
 import org.eclipse.gef.GraphicalEditPart;
@@ -21,7 +18,6 @@ import org.eclipse.gef.editpolicies.SnapFeedbackPolicy;
 import org.eclipse.jface.viewers.TextCellEditor;
 
 import sensingflow.gef.editor.figure.SensingflowPortFigure;
-import sensingflow.model.SensingflowNode;
 import sensingflow.model.SensingflowPort;
 import sensingflow.model.impl.SensingflowOutPortImpl;
 

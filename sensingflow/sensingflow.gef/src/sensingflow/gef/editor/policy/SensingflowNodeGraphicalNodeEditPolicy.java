@@ -7,7 +7,6 @@ import org.eclipse.gef.requests.CreateConnectionRequest;
 import org.eclipse.gef.requests.ReconnectRequest;
 
 import sensingflow.gef.editor.command.SensingflowLinkCreateCommand;
-import sensingflow.gef.editor.part.SensingflowInPortEditPart;
 import sensingflow.gef.editor.part.SensingflowOutPortEditPart;
 import sensingflow.model.SensingflowInPort;
 import sensingflow.model.SensingflowLink;

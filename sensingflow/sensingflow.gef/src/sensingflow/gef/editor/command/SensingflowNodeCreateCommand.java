@@ -4,18 +4,14 @@ import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gef.commands.Command;
 
 import sensingflow.model.SensingflowContainer;
-import sensingflow.model.SensingflowInPort;
 import sensingflow.model.SensingflowNode;
-import sensingflow.model.SensingflowOutPort;
-import sensingflow.model.SensingflowPort;
 import sensingflow.model.SensingflowProcessor;
+import sensingflow.model.SensingflowTask;
 import sensingflow.model.SensingflowThing;
 import sensingflow.model.impl.SensingflowInPortImpl;
 import sensingflow.model.impl.SensingflowOutPortImpl;
-import sensingflow.model.impl.SensingflowPortImpl;
 import sensingflow.model.impl.SensingflowSensorImpl;
 import sensingflow.model.impl.SensingflowTaskImpl;
-import sensingflow.model.SensingflowTask;
 
 /**
  * Command used to create a new {@link SensingflowNode} in the diagram.

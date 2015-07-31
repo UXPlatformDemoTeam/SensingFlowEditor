@@ -25,8 +25,6 @@ import org.eclipse.gef.ui.actions.ToggleSnapToGeometryAction;
 import org.eclipse.gef.ui.parts.GraphicalEditorWithFlyoutPalette;
 import org.eclipse.gef.ui.properties.UndoablePropertySheetEntry;
 import org.eclipse.gef.ui.properties.UndoablePropertySheetPage;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -319,7 +317,6 @@ public class SensingflowGraphicalEditor extends GraphicalEditorWithFlyoutPalette
 					newRootElement.addNamespaceDeclaration(XMI);
 
 					int[] numOutputID = new int[100];
-					int[] numOutputSize = new int[100];
 					// DKIM: Check connections
 					for (Element elm : rootElement.getChildren()) {
 						if (elm.getName() == "Connection") {

@@ -12,13 +12,11 @@ import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.NodeEditPart;
 import org.eclipse.gef.Request;
 import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
-import org.eclipse.swt.graphics.Cursor;
-import org.eclipse.swt.graphics.ImageData;
 
 import sensingflow.gef.editor.figure.SensingflowNodeFigure;
+import sensingflow.gef.editor.policy.SensingflowContainerXYLayoutPolicy;
 import sensingflow.gef.editor.policy.SensingflowNodeComponentEditPolicy;
 import sensingflow.gef.editor.policy.SensingflowNodeGraphicalNodeEditPolicy;
-import sensingflow.gef.editor.policy.SensingflowContainerXYLayoutPolicy;
 import sensingflow.model.SensingflowLink;
 import sensingflow.model.SensingflowNode;
 
