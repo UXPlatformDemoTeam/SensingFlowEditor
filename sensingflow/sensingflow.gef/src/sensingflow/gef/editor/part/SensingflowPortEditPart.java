@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Label;
+import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -77,9 +78,10 @@ public abstract class SensingflowPortEditPart extends SensingflowNodeEditPart {
 		SensingflowPort model = (SensingflowPort)getModel();
 		GraphicalEditPart parent = (GraphicalEditPart) getParent();
 		
-		if (model.getClass().equals(SensingflowOutPortImpl.class))
-			figure.getNameLabel().setText("   OUT");
-		else
+		if (model.getClass().equals(SensingflowOutPortImpl.class)){
+			figure.getNameLabel().setText("OUT");
+			figure.getNameLabel().setLabelAlignment(PositionConstants.RIGHT);
+		}else
 			figure.getNameLabel().setText("IN");
 		parent.setLayoutConstraint(this, figure, model.getConstraints());
 	}
